@@ -5,7 +5,9 @@ void main() {
     FriendlyChatApp(),
   );
 }
+
 String _name = 'Swaubhik';
+
 class FriendlyChatApp extends StatelessWidget {
   const FriendlyChatApp({Key? key}) : super(key: key);
 
@@ -16,10 +18,11 @@ class FriendlyChatApp extends StatelessWidget {
       home: ChatScreen(),
     );
   }
-}class ChatMessage extends StatelessWidget {
-  ChatMessage({required this.text}); // NEW
-  final String text;                 // NEW
+}
 
+class ChatMessage extends StatelessWidget {
+  ChatMessage({required this.text}); // NEW
+  final String text; // NEW
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +60,15 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<ChatMessage> _message = []; //NEW
   final _textController = TextEditingController();
 
+
   void _handleSubmitted(String text) {
     _textController.clear();
+    ChatMessage message = ChatMessage(          //NEW
+      text: text,                               //NEW
+    );                                          //NEW
+    setState(() {                               //NEW
+      _message.insert(0, message);              //NEW
+    });                                         //NEW
   }
 
   @override
