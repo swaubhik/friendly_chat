@@ -1,4 +1,4 @@
-# Friendly_chat
+# Friendly chat
 
 A Chatting Application
 
