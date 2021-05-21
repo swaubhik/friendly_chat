@@ -59,23 +59,42 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final List<ChatMessage> _message = []; //NEW
   final _textController = TextEditingController();
-
+  final FocusNode _focusNode = FocusNode(); //NEW
 
   void _handleSubmitted(String text) {
     _textController.clear();
-    ChatMessage message = ChatMessage(          //NEW
-      text: text,                               //NEW
-    );                                          //NEW
-    setState(() {                               //NEW
-      _message.insert(0, message);              //NEW
-    });                                         //NEW
+    ChatMessage message = ChatMessage(
+      text: text,
+    );
+    setState(() {
+      _message.insert(0, message);
+    });
+    _focusNode.requestFocus();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('FriendlyChat')),
-      body: _buildTextComposer(),
+      body: Column(
+        children: [
+          Flexible(
+            child: ListView.builder(
+              padding: EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) => _message[index],
+              itemCount: _message.length,
+            ),
+          ),
+          Divider(
+            height: 1.0,
+          ),
+          Container(
+            decoration: BoxDecoration(color: Theme.of(context).cardColor),
+            child: _buildTextComposer(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -92,6 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 onSubmitted: _handleSubmitted,
                 decoration:
                     InputDecoration.collapsed(hintText: 'Send a message'),
+                focusNode: _focusNode, //NEW
               ),
             ),
             Container(
